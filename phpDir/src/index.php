@@ -1,6 +1,22 @@
-<?php
+<?php declare(strict_types=1);
+include './db.php';
 
-declare(strict_types=1);
+    $sql="select * from consultant";
+    $result=mysqli_query($conn, $sql);
+    if($result) {
+        while($row=mysqli_fetch_assoc($result)) {
+            $views=$row['views'];
+            $about=$row['about'];
+            $review=$row['review'];
+            echo '<tr>
+            <th scope="row">'.$views.'</th>
+            <td>'.$about.'</td>
+            <td>'.$review.'</td>
+       
+          </tr>';
+        }
+    }
+  
 ?>
 
 <!DOCTYPE html>

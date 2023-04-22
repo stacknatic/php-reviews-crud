@@ -1,7 +1,7 @@
 <?php
 
 $host = 'db';
-$dbname = 'todoDb';
+$dbname = 'projectdb';
 $user = 'root';
 $pass = 'lionPass';
 
