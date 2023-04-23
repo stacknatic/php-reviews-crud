@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 include './db.php';
-
     $sql="select * from consultant";
     $result=mysqli_query($conn, $sql);
     if($result) {
@@ -8,12 +7,12 @@ include './db.php';
             $views=$row['views'];
             $about=$row['about'];
             $review=$row['review'];
-            echo '<tr>
-            <th scope="row">'.$views.'</th>
-            <td>'.$about.'</td>
-            <td>'.$review.'</td>
+        //     echo '<tr>
+        //     <th scope="row">'.$views.'</th>
+        //     <td>'.$about.'</td>
+        //     <td>'.$review.'</td>
        
-          </tr>';
+        //   </tr>';
         }
     }
   
@@ -35,9 +34,10 @@ include './db.php';
     <main>
         <section class='profile-section'>
 
-            <h2>Profile Overview</h2>
+            <!-- <h2>Profile Overview</h2> -->
             <div class='profile-images'>
                 <div class='profile-cover'>
+                   
                 </div>
 
                 <div class='profile-pic'></div>
@@ -48,18 +48,18 @@ include './db.php';
             </div>
 
             <div class='profile-stats'>
-                <span>1,300 Views</span>
-                <span>864 Follows</span>
-                <span>2300 Reviews</span>
+<span class='profile-views'><? echo $views ?> Views</span>
+                <!-- <span>864 <span class='profile-follows'>Follows</span></span> -->
+                <span class='profile-reviews'>2300 Reviews</span>
 
             </div>
 
             <div class='profile-data'>
 
                 <h3>About</h3>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore dicta quo, illum voluptas sit esse suscipit harum repellendus provident iure facilis maiores. Ut repellat nihil enim consectetur quam pariatur incidunt ipsam! Tenetur quo non voluptates dolores. Amet sapiente dignissimos molestias at illum ipsam consequatur alias, fugiat ipsa ad asperiores corporis.
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore vel, harum, assumenda temporibus dicta velit architecto blanditiis aliquid amet ut laboriosam minus optio ea, repudiandae unde praesentium possimus labore! Ratione praesentium voluptas quasi et ex!</p>
                 <h3>Reviews</h3>
-                <!-- <span> Rated 4 / 5 based on 1 review</span>
+                <!-- <p> Rated 4 / 5 based on 1 review</p>
         <span class="fa fa-star checked"></span>
         <span class="fa fa-star checked"></span>
         <span class="fa fa-star checked"></span>
@@ -67,7 +67,7 @@ include './db.php';
         <span class="fa fa-star unchecked"></span>
         <br> -->
 
-                <span> Rated 4 / 5 based on 3 reviews</span>
+                <p> Rated 4 / 5 based on 3 reviews</p>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
@@ -90,6 +90,7 @@ include './db.php';
         <section class='sidebar'>
             <div>
                 <h2>Recent Reviews</h2>
+                <button class='add-review'>Add review</button>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>

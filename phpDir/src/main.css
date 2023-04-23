@@ -42,17 +42,33 @@ main{
     border: 1px solid gray;
     line-height: 2rem;
     padding: 1rem;
+    position: relative;
     /* margin: auto; */
 }
+.add-review{
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem;
+    border-radius: 20px;
+    background-color: #1f1f1f;
+    color: white;
+}
+
+
 
 .profile-stats{
     margin: 1rem;
     display: flex;
     justify-content: center;
-
+    /* text-align: center; */
 }
 .profile-stats span{
     margin: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .profile-container{
@@ -112,9 +128,10 @@ main{
 @media only screen and (max-width: 694px){
     .profile-section{
         flex-basis: 100%;
-        width: 50%
-        
-        
+        width: 50%;     
+    }
+    p, h2, h3{
+        font-size: small;
     }
     .sidebar{
         flex-basis: 100%;
@@ -123,6 +140,10 @@ main{
     /* .profile-cover{
         width: 60%;
     } */
+    .profile-stats{
+        font-size: small;
+        text-align: center;
+    }
 }
 
 
