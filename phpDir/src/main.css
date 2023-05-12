@@ -15,12 +15,46 @@ h3{
     margin-bottom: 0.5rem;
 }
 
+header{
+    background-color: #1f1f1f;
+    color: #fff;
+    padding: 0.5rem;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 
 main{
     display: flex;
     flex-wrap: wrap;
     padding: 1rem;
+    position: relative;
 
+}
+.admin-button{
+    padding: 0.5rem;
+    background-color: #f5f5f5;
+    color: #000;
+    border-radius: 20px;
+}
+
+.edit-review{
+    padding: 0.4rem;
+    border-radius: 15px;
+    
+}
+.delete-review{
+    padding: 0.4rem;
+    border-radius: 15px;
+    background-color: darkred;
+    color: #fff;
+    font-weight: bold;
+    
 }
 
 .profile-section{
@@ -229,4 +263,16 @@ main{
     right: 1rem;
     font-size: 1.3rem;
     font-weight: bold;
+}
+
+.location-icon{
+    width: 40px;
+    height: 40px;
+}
+
+.location{
+    display: flex;
+    justify-content: center;
+   
+
 }

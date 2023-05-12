@@ -1,17 +1,17 @@
 <?php
-
 declare(strict_types=1);
 include './db.php';
-$sql = "select * from consultant";
+$sql = "select * from consultant order by consultantid desc";
 $result = mysqli_query($conn, $sql);
 
-$theaverage = "SELECT AVG(rating) AS 'averageRating' FROM rating";
+$averagequery = "SELECT AVG(rating) AS 'averageRating' FROM consultant";
 
-$average = mysqli_query($conn, $theaverage);
+$getaverage = $conn->query($averagequery);
 
-while ($row = mysqli_fetch_array($average)) {
-    $avg = $row;
-}
+$average = mysqli_fetch_assoc($getaverage);
+
+$reviewaverage = round(floatval($average['averageRating']), 1);
+
 
 if ($result) {
     $totalrating =  mysqli_num_rows($result);
@@ -20,12 +20,6 @@ if ($result) {
         $about = $row['about'];
         $review = $row['review'];
         $rating = $row['rating'];
-        //     echo '<tr>
-        //     <th scope="row">'.$views.'</th>
-        //     <td>'.$about.'</td>
-        //     <td>'.$review.'</td>
-
-        //   </tr>';
     }
 }
 
@@ -39,17 +33,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $rating = $_POST['rating'];
 
         $review = htmlspecialchars($review);
-        //   $description = htmlspecialchars($description);
-
+        
         $stmt = $conn->prepare("insert into consultant(review, rating) values(?,?)");
         $stmt->bind_param("si", $review, $rating);
-        // $stmt->bind_param("i", $rating);
 
         
 
         $stmt->execute();
 
-        //echo "New review added successfully";
+        $stmt->close();
+        $conn->close();
+
+        header("Location: index.php");
+        exit();
+    }
+    if (isset($_POST['delete'])) {
+    
+
+        $postId = $_POST['delete'];
+
+
+        $stmt = $conn->prepare("delete from consultant where consultantid=?");
+        $stmt->bind_param("i", $postId);
+
+        
+
+        $stmt->execute();
+
 
         $stmt->close();
         $conn->close();
@@ -74,6 +84,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
+    <header>
+        <div>
+            <h1>
+                CyberKonsult
+            </h1>
+            <small>
+                Hire the best cyber security consultants
+            </small>
+        </div>
+        <nav>
+            <button class='admin-button'>
+                Admin
+            </button>
+        </nav>
+    </header>
     <main>
         <section class='profile-section'>
 
@@ -88,35 +113,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <div class='profile-name'>
                 John Smith
-                <p>average is: <?php echo $avg ?></p>
             </div>
 
             <div class='profile-stats'>
-                <span class='profile-views'><? echo $views ?> Views</span>
-                <!-- <span>864 <span class='profile-follows'>Follows</span></span> -->
-                <span class='profile-reviews'><? echo $totalrating ?> Reviews</span>
+                <!-- <span class='profile-views'><? echo $views ?> Views</span> -->
+                <span> Cyber Security Consultant </span>
+            </span>
+            <!-- <span class='profile-reviews'><? echo $totalrating ?> Reviews</span> -->
+            
+        </div>
+        <div class="location">
+        <img class="location-icon" src="/images/location.svg" alt="location icon"></img><span class='location-icon'>Paris</span>
 
-            </div>
+        </div>
 
             <div class='profile-data'>
 
                 <h3>About</h3>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore vel, harum, assumenda temporibus dicta velit architecto blanditiis aliquid amet ut laboriosam minus optio ea, repudiandae unde praesentium possimus labore! Ratione praesentium voluptas quasi et ex!</p>
                 <h3>Reviews</h3>
-                <!-- <p> Rated 4 / 5 based on 1 review</p>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked" ></span>
-        <span class="fa fa-star unchecked"></span>
-        <br> -->
+                
 
-                <p> Rated 4 / 5 based on <? echo $totalrating ?> reviews</p>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
+                <p> Rated <? echo $reviewaverage ?> / 5 based on <? echo $totalrating ?> reviews</p>
+                        <span class='fa fa-star <?if($reviewaverage >= 1)
+                            echo 'checked'?>'>
+                        </span>
+                        <span class='fa fa-star <?if($reviewaverage >= 2)
+                            echo 'checked'?>'>
+                        </span>
+                        <span class='fa fa-star  <?if($reviewaverage >= 3)
+                            echo 'checked'?>'>
+                        </span>
+                        <span class='fa fa-star  <?if($reviewaverage >= 4)
+                            echo 'checked'?>'>
+                        </span>
+                        <span class='fa fa-star  <?if($reviewaverage >= 5)
+                            echo 'checked'?>'>
+                        </span>
 
 
                 <h3>Book Apointment</h3>
@@ -135,35 +168,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div>
                 <h2>Recent Reviews</h2>
                 <button class='add-review'>Add review</button>
-                <!-- <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span> -->
+    
                 <?php 
               
                 $result = mysqli_query($conn, $sql);
                 if ($result) {
                    
                     $number = 1;
-                    function checker1($rating){
-                        if($rating >= 1){
-                            return 'checked';
-                        }}
-                    function checker2($rating){
-                        if($rating >= 2){
-                            return 'checked';
-                        }}
-                    function checker3($rating){
-                        if($rating >= 3){
-                            return 'checked';
-                        }}
-                    function checker4($rating){
-                        if($rating >= 4){
-                            return 'checked';
-                        }}
-                    function checker5($rating){
-                        if($rating >= 5){
+                    // starkey is the position of the star (between 1 - 5)
+                    function checker1($rating, $starkey){
+                        if($rating >= $starkey){
                             return 'checked';
                         }}
                     
@@ -172,22 +186,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         // $about = $row['about'];
                         $review = $row['review'];
                         $rating = $row['rating'];
+                        $star1 = checker1($rating, 1);
+                        $star2 = checker1($rating, 2);
+                        $star3 = checker1($rating, 3);
+                        $star4 = checker1($rating, 4);
+                        $star5 = checker1($rating, 5);
                         
-                        $star1 = checker1($rating);
-                        $star2 = checker2($rating);
-                        $star3 = checker3($rating);
-                        $star4 = checker4($rating);
-                        $star5 = checker5($rating);
 
-
-
-
-                        //     echo '<tr>
-                        //     <th scope="row">'.$views.'</th>
-                        //     <td>'.$about.'</td>
-                        //     <td>'.$review.'</td>
-                
-                        //   </tr>';
                         echo $number++ . '.'
                         . 
                        
@@ -198,18 +203,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <span class='fa fa-star $star4'></span>
                         <span class='fa fa-star $star5'></span>
                        
-                        <p> $review </p>
+                        <div>
+                        <form action='' method='post'>
+                        <p> $review <p>
+                        <div>
+                        
+                        <button class='edit-review' name='edit' value=$id> Edit </button>
+                        <button class='delete-review' name='delete' value=$id> Delete </button>
+                        </div>
+                        </form>
+                        </div>
                         ";
+                        
                     }
+                    
                 }
                 ?>
-                <!-- <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star unchecked"></span> -->
-               
-               
 
             </div>
         </section>
@@ -234,11 +243,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 </div>
 
+            </div>
+
+        </div>
+        
+        <div class="modal-container">
+            <div class="modal-box">
+                <span class="modal-close-button">x</span>
+                <h2 id="game-score">Edit Review</h2>
+                <p class="review"></p>
+                <div class="review-input-container">
+                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method='post'>
+                        <textarea name="edit-review" id="review" cols="50" rows="10"></textarea>
+                        <label for="rating">Choose rating</label>
+                        <select name="rating" id="rating">
+                            <option value="5">5</option>
+                            <option value="4">4</option>
+                            <option value="3">3</option>
+                            <option value="2">2</option>
+                            <option value="1">1</option>
+                        </select>
+                        <input type="submit" value="Submit edit" class='submit-edit-button' name='submit'>
+                    </form>
+
+                </div>
 
             </div>
 
         </div>
-    </main>
     <script src="main.js"></script>
 </body>
 
