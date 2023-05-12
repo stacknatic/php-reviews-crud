@@ -26,9 +26,8 @@ if ($result) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
-    if (isset($_POST['submit'])) {
+    if (isset($_POST['submit']) && !isset($_POST['edit-review'])) {
         $review = $_POST['review'];
-        //   $description=$_POST['description'];
 
         $rating = $_POST['rating'];
 
@@ -36,8 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         $stmt = $conn->prepare("insert into consultant(review, rating) values(?,?)");
         $stmt->bind_param("si", $review, $rating);
-
-        
 
         $stmt->execute();
 
@@ -56,10 +53,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $conn->prepare("delete from consultant where consultantid=?");
         $stmt->bind_param("i", $postId);
 
-        
-
+    
         $stmt->execute();
 
+        $stmt->close();
+        $conn->close();
+
+        header("Location: index.php");
+        exit();
+    }
+
+    if (isset($_POST['edit-review'])) {
+        
+        $review = $_POST['review'];
+
+        $review = htmlspecialchars($review);
+        
+        $rating = $_POST['rating'];
+        
+        $postId = $_POST['reviewid'];
+
+        $stmt = $conn->prepare("update consultant set review=?, rating=? where consultantid=?");
+        $stmt->bind_param("sii", $review, $rating, $postId);
+
+        $stmt->execute();
 
         $stmt->close();
         $conn->close();
@@ -131,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <h3>About</h3>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore vel, harum, assumenda temporibus dicta velit architecto blanditiis aliquid amet ut laboriosam minus optio ea, repudiandae unde praesentium possimus labore! Ratione praesentium voluptas quasi et ex!</p>
-                <h3>Reviews</h3>
+                <h3>Total Reviews</h3>
                 
 
                 <p> Rated <? echo $reviewaverage ?> / 5 based on <? echo $totalrating ?> reviews</p>
@@ -204,15 +221,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <span class='fa fa-star $star5'></span>
                        
                         <div>
-                        <form action='' method='post'>
                         <p> $review <p>
                         <div>
                         
-                        <button class='edit-review' name='edit' value=$id> Edit </button>
+                        <form action='' method='post'>
+                        <button class='edit-review' name='edit' id=$id> Edit </button>
                         <button class='delete-review' name='delete' value=$id> Delete </button>
                         </div>
                         </form>
                         </div>
+
+                        <div class='edit-container' id=$id>
+                        <div class='edit-box'>
+                            <span class='edit-close-button' id=$id>x</span>
+                            <h2 id='game-score'>Edit Review</h2>
+                            <p class='edit'></p>
+                            <div class='review-input-container'>
+                                <form action='' method='post'>
+                                    <input type='hidden' id='reviewid' name='reviewid' value=$id readonly>
+                                    <textarea name='review' id='review' cols='50' rows='10'> $review</textarea>
+                                    <label for='rating'>Choose rating</label>
+                                    <select name='rating' id='rating'>
+                                        <option value='5'>5</option>
+                                        <option value='4'>4</option>
+                                        <option value='3'>3</option>
+                                        <option value='2'>2</option>
+                                        <option value='1'>1</option>
+                                    </select>
+                                    <input type='submit' value='Submit edit' class='submit-edit' name='edit-review'>
+                                </form>
+            
+                            </div>
+            
+                        </div>
+            
+                    </div>
                         ";
                         
                     }
@@ -222,6 +265,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             </div>
         </section>
+       
+        
         <div class="modal-container">
             <div class="modal-box">
                 <span class="modal-close-button">x</span>
@@ -238,32 +283,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <option value="2">2</option>
                             <option value="1">1</option>
                         </select>
-                        <input type="submit" value="Submit review" class='submit-review-button' name='submit'>
-                    </form>
-
-                </div>
-
-            </div>
-
-        </div>
-        
-        <div class="modal-container">
-            <div class="modal-box">
-                <span class="modal-close-button">x</span>
-                <h2 id="game-score">Edit Review</h2>
-                <p class="review"></p>
-                <div class="review-input-container">
-                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method='post'>
-                        <textarea name="edit-review" id="review" cols="50" rows="10"></textarea>
-                        <label for="rating">Choose rating</label>
-                        <select name="rating" id="rating">
-                            <option value="5">5</option>
-                            <option value="4">4</option>
-                            <option value="3">3</option>
-                            <option value="2">2</option>
-                            <option value="1">1</option>
-                        </select>
-                        <input type="submit" value="Submit edit" class='submit-edit-button' name='submit'>
+                        <input type="submit" value="Submit" class='submit-review-button' name='submit'>
                     </form>
 
                 </div>
