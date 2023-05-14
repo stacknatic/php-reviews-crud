@@ -1,6 +1,6 @@
 # Consultants review app 
 
-A simple responsonsive consultants review app in a docker image.
+A simple responsive consultants review app in a docker image.
 
 ## Features
 
