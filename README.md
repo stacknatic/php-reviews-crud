@@ -15,8 +15,10 @@ A simple responsonsive consultants review app in a docker image.
 
 ## Screenshots
 
+### Desktop view
 ![Desktop](phpDir/src/images/reviews.png "Reviews app desktop screenshot")
 
+### Mobile view
 ![Mobile](phpDir/src/images/reviews-mobile.png  "Reviews app mobile screenshot")
 
 
