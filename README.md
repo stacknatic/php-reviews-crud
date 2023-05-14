@@ -1,17 +1,28 @@
-# PHP-MAMP
+# Consultants review app 
 
-PHP-MAMP is a set of docker images that include a MAMP stack ([macOS](https://www.apple.com/macos/monterey/), [Apache](https://www.apache.org/), [MySQL](https://www.mysql.com/), [PHP8](https://www.php.net/) and [phpMyAdmin](https://www.phpmyadmin.net/) all in one handy package.
+A simple responsonsive consultants review app in a docker image.
 
-## Using the image
+## Features
 
-### On the command line
+- CRUD
 
-This is the quickest way
 
-```
-docker-compose up
-```
+## How to run it
 
-# Use for reference
+- docker-compose up
 
-Use solely for reference material only
+- There is a database dump file in the root folder (database.sql).
+
+## Screenshots
+
+![Desktop](phpDir/src/images/reviews.png "Reviews app desktop screenshot")
+
+![Mobile](phpDir/src/images/reviews-mobile.png  "Reviews app mobile screenshot")
+
+
+
+
+
+
+
+

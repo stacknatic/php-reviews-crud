@@ -4,12 +4,9 @@
     box-sizing: border-box;
 }
 body{
-    /* margin: 1rem; */
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
-/* h2{
-    padding: 0.5rem;
-} */
+
 h3{
     margin-top: 1.2rem;
     margin-bottom: 0.5rem;
@@ -28,19 +25,22 @@ header{
     align-items: center;
 }
 
-
 main{
     display: flex;
     flex-wrap: wrap;
     padding: 1rem;
     position: relative;
+    min-height: calc(100vh - 10vh);
 
 }
-.admin-button{
-    padding: 0.5rem;
-    background-color: #f5f5f5;
-    color: #000;
-    border-radius: 20px;
+footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1f1f1f;
+    color: #fff;
+    height: 3rem;
+    position: sticky;
 }
 
 .edit-review{
@@ -54,16 +54,13 @@ main{
     background-color: darkred;
     color: #fff;
     font-weight: bold;
+    font-family: inherit;
     
 }
 
 .profile-section{
     flex-basis: 65%;
     margin: 1rem auto;
-
-    /* display: flex;
-    justify-content: center;
-    flex-direction: column; */
     position: relative;
     border: 1px solid gray;
     padding: 1rem;
@@ -77,7 +74,6 @@ main{
     line-height: 2rem;
     padding: 1rem;
     position: relative;
-    /* margin: auto; */
 }
 .add-review{
     position: absolute;
@@ -102,7 +98,6 @@ main{
     margin: 1rem;
     display: flex;
     justify-content: center;
-    /* text-align: center; */
 }
 .profile-stats span{
     margin: 0 2rem;
@@ -114,13 +109,10 @@ main{
 
 .profile-container{
     display: flex;
-    /* justify-content: center; */
     flex-direction: column;
     align-items: center;
     margin: 2rem;
-    /* border: 1px solid gray; */
     position: relative;
-    /* height: 90vh; */
 }
 
 .profile-images{
@@ -139,7 +131,6 @@ main{
     background: url('/images/cover-image.jpeg') no-repeat center / cover;
     
 }
-
 
 .profile-pic{
 
@@ -178,9 +169,6 @@ main{
         flex-basis: 100%;
         width: 50%;
     }
-    /* .profile-cover{
-        width: 60%;
-    } */
     .profile-stats{
         font-size: small;
         text-align: center;
@@ -205,7 +193,6 @@ main{
     position: fixed;
     top: 0;
     left: 0;
-    /* z-index: 1; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -233,8 +220,8 @@ main{
 .modal-box, .edit-box {
     border: 1px gray solid;
     border-radius: 15px;
-    width: 26rem;
-    height: 26rem;
+    width: 25rem;
+    height: 25rem;
     padding: 10px;
     background-color: white;
     z-index: 10;
@@ -264,6 +251,8 @@ main{
     font-size: 1.3rem;
     font-weight: bold;
 }
+
+/***** location *****/
 
 .location-icon{
     width: 40px;

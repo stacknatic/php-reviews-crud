@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['delete'])) {
     
 
-        $postId = $_POST['delete'];
+        $postId = $_POST['postid'];
 
 
         $stmt = $conn->prepare("delete from consultant where consultantid=?");
@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My PHP Project</title>
+    <title>Demo Consultants Website</title>
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
 </head>
@@ -110,11 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 Hire the best cyber security consultants
             </small>
         </div>
-        <nav>
-            <button class='admin-button'>
-                Admin
-            </button>
-        </nav>
+        
     </header>
     <main>
         <section class='profile-section'>
@@ -169,14 +165,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </span>
 
 
-                <h3>Book Apointment</h3>
+                <!-- <h3>Book Service</h3>
                 <form action="" method='post'>
                     <label for="date">Select date</label>
                     <input type="date" id="date">
                     <label for="time">Select time</label>
                     <input type="time" id='time' min="09:00" max="17:00" required>
-                </form>
-                <p>Send Message</p>
+                </form> -->
             </div>
 
 
@@ -225,8 +220,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div>
                         
                         <form action='' method='post'>
-                        <button class='edit-review' name='edit' id=$id> Edit </button>
-                        <button class='delete-review' name='delete' value=$id> Delete </button>
+                        <input type='button' class='edit-review' name='edit' id=$id value='Edit'>
+                        <input type='hidden' name='postid' value=$id>
+                        <input type='submit' id='delete' class='delete-review' name='delete' value='Delete'>
                         </div>
                         </form>
                         </div>
@@ -292,6 +288,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         </div>
     <script src="main.js"></script>
+    </main>
+    <footer>
+    &copy; 2023 Michael Akerele (Stacknatic)
+    </footer>
 </body>
 
 </html>
